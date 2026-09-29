@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE MONEY EDIT - Curated for Elie</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#F9F8F6',
+            charcoal: '#2C2A29',
+            muted: '#7A7876'
+          },
+          fontFamily: {
+            serif: ['Cormorant Garamond', 'serif'],
+            sans: ['Montserrat', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: theme('colors.cream');
+      color: theme('colors.charcoal');
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    /* Editorial Line Separators */
+    .hairline-top { border-top: 1px solid theme('colors.charcoal'); }
+    .hairline-bottom { border-bottom: 1px solid theme('colors.charcoal'); }
+    .hairline-y { border-top: 1px solid theme('colors.charcoal'); border-bottom: 1px solid theme('colors.charcoal'); }
+    
+    /* Input Styling */
+    input[type="text"] {
+      background: transparent;
+      border: none;
+      outline: none;
+      text-align: right;
+      width: 100%;
+      font-variant-numeric: tabular-nums;
+      transition: opacity 0.3s ease;
+    }
+    input[type="text"]:focus {
+      opacity: 0.7;
+      border-bottom: 1px dashed theme('colors.muted');
+    }
+    
+    /* Hide number arrows */
+    input[type="number"]::-webkit-inner-spin-button, 
+    input[type="number"]::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+      margin: 0; 
+    }
+
+    /* Subtle fade-in animation */
+    .fade-in {
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 sm:p-8">
+
+  <main class="w-full max-w-4xl bg-cream fade-in">
+    
+    <!-- Header Section -->
+    <header class="text-center mb-16 relative">
+      <div class="absolute top-0 left-0 w-full flex justify-between items-center text-[10px] font-sans tracking-[0.2em] uppercase text-muted">
+        <span>Vol. I</span>
+        <button id="soundToggle" onclick="toggleSound()" class="hover:text-charcoal transition-colors">Sound: On</button>
+        <span id="currentDate">OCT 2026</span>
+      </div>
+      
+      <div class="pt-12 pb-6">
+        <h1 class="font-serif text-5xl sm:text-7xl md:text-8xl tracking-tight leading-none mb-4">
+          THE MONEY EDIT
+        </h1>
+        <div class="flex items-center justify-center gap-4">
+          <div class="h-px bg-charcoal w-12 sm:w-24"></div>
+          <p class="font-serif italic text-xl sm:text-2xl text-charcoal">Curated for Elie</p>
+          <div class="h-px bg-charcoal w-12 sm:w-24"></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-y-12 gap-x-16">
+      
+      <!-- Left Column: The Flows (Income & Expenses) -->
+      <div class="md:col-span-7 space-y-0 hairline-y">
+        
+        <!-- Monthly Income -->
+        <div class="flex justify-between items-end py-6 hairline-bottom group">
+          <div class="flex-1">
+            <h2 class="font-serif text-2xl mb-1 group-hover:italic transition-all">Monthly Income</h2>
+            <p class="font-sans text-[9px] uppercase tracking-[0.15em] text-muted">Total incoming capital</p>
+          </div>
+          <div class="w-1/2 flex items-baseline justify-end">
+            <span class="font-serif text-xl mr-1 text-muted">$</span>
+            <input type="text" id="income" class="font-serif text-3xl sm:text-4xl edit-input" value="0.00" onfocus="handleFocus(this)" onblur="handleBlur(this, 'income')" oninput="handleInput()">
+          </div>
+        </div>
+
+        <!-- Monthly Essentials -->
+        <div class="flex justify-between items-end py-6 hairline-bottom group">
+          <div class="flex-1">
+            <h2 class="font-serif text-2xl mb-1 group-hover:italic transition-all">Monthly Essentials</h2>
+            <p class="font-sans text-[9px] uppercase tracking-[0.15em] text-muted">Housing, utilities, groceries</p>
+          </div>
+          <div class="w-1/2 flex items-baseline justify-end">
+            <span class="font-serif text-xl mr-1 text-muted">$</span>
+            <input type="text" id="essentials" class="font-serif text-3xl sm:text-4xl edit-input" value="0.00" onfocus="handleFocus(this)" onblur="handleBlur(this, 'essentials')" oninput="handleInput()">
+          </div>
+        </div>
+
+        <!-- Flexible Spending -->
+        <div class="flex justify-between items-end py-6 hairline-bottom group">
+          <div class="flex-1">
+            <h2 class="font-serif text-2xl mb-1 group-hover:italic transition-all">Flexible Spending</h2>
+            <p class="font-sans text-[9px] uppercase tracking-[0.15em] text-muted">Dining, leisure, lifestyle</p>
+          </div>
+          <div class="w-1/2 flex items-baseline justify-end">
+            <span class="font-serif text-xl mr-1 text-muted">$</span>
+            <input type="text" id="flexible" class="font-serif text-3xl sm:text-4xl edit-input" value="0.00" onfocus="handleFocus(this)" onblur="handleBlur(this, 'flexible')" oninput="handleInput()">
+          </div>
+        </div>
+
+        <!-- Savings -->
+        <div class="flex justify-between items-end py-6 hairline-bottom group">
+          <div class="flex-1">
+            <h2 class="font-serif text-2xl mb-1 group-hover:italic transition-all">Savings Target</h2>
+            <p class="font-sans text-[9px] uppercase tracking-[0.15em] text-muted">Investments & cash reserves</p>
+          </div>
+          <div class="w-1/2 flex items-baseline justify-end">
+            <span class="font-serif text-xl mr-1 text-muted">$</span>
+            <input type="text" id="savings" class="font-serif text-3xl sm:text-4xl edit-input" value="0.00" onfocus="handleFocus(this)" onblur="handleBlur(this, 'savings')" oninput="handleInput()">
+          </div>
+        </div>
+
+        <!-- Debt -->
+        <div class="flex justify-between items-end py-6 group">
+          <div class="flex-1">
+            <h2 class="font-serif text-2xl mb-1 group-hover:italic transition-all">Debt Allocation</h2>
+            <p class="font-sans text-[9px] uppercase tracking-[0.15em] text-muted">Credit, loans, mortgages</p>
+          </div>
+          <div class="w-1/2 flex items-baseline justify-end">
+            <span class="font-serif text-xl mr-1 text-muted">$</span>
+            <input type="text" id="debt" class="font-serif text-3xl sm:text-4xl edit-input" value="0.00" onfocus="handleFocus(this)" onblur="handleBlur(this, 'debt')" oninput="handleInput()">
+          </div>
+        </div>
+        
+      </div>
+
+      <!-- Right Column: Net Worth & Remaining Balance -->
+      <div class="md:col-span-5 flex flex-col justify-between pt-4 md:pt-0">
+        
+        <!-- Net Worth Snapshot -->
+        <div class="mb-12 border border-charcoal p-8 relative">
+          <div class="absolute -top-3 left-6 bg-cream px-2">
+            <span class="font-sans text-[10px] uppercase tracking-[0.2em]">Snapshot</span>
+          </div>
+          <h2 class="font-serif text-2xl mb-4 italic text-center">Net Worth</h2>
+          <div class="flex items-baseline justify-center">
+            <span class="font-serif text-2xl mr-2 text-muted">$</span>
+            <input type="text" id="netWorth" class="font-serif text-4xl sm:text-5xl text-center edit-input" value="0.00" onfocus="handleFocus(this)" onblur="handleBlur(this, 'netWorth')" oninput="handleInput()">
+          </div>
+          <p class="font-sans text-[9px] uppercase tracking-[0.1em] text-muted text-center mt-6">Total Assets minus Liabilities</p>
+        </div>
+
+        <!-- Remaining Allocation Calculation -->
+        <div class="bg-charcoal text-cream p-8 text-center mt-auto shadow-2xl relative overflow-hidden group">
+          <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 pointer-events-none"></div>
+          <span class="font-sans text-[10px] uppercase tracking-[0.2em] block mb-4 text-cream/70">Remaining Monthly Allocation</span>
+          <div class="flex justify-center items-baseline">
+            <span class="font-serif text-2xl mr-2 opacity-70">$</span>
+            <span id="remainingBalance" class="font-serif text-5xl sm:text-6xl tracking-tight group-hover:scale-105 transition-transform duration-500">
+              0.00
+            </span>
+          </div>
+          <p id="remainingStatus" class="font-serif italic text-sm mt-4 text-cream/80">Awaiting your edit...</p>
+        </div>
+        
+      </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="mt-16 pt-8 hairline-top text-center pb-8">
+      <p class="font-sans text-[9px] uppercase tracking-[0.2em] text-muted">The Editorial Finances Collection &mdash; Est. 2026</p>
+    </footer>
+
+  </main>
+
+  <script>
+    // --- State & Initialization ---
+    const STORAGE_KEY = 'THE_MONEY_EDIT_V1';
+    let soundEnabled = true;
+    let audioCtx = null;
+    
+    let state = {
+      income: 8500,
+      essentials: 3200,
+      flexible: 1500,
+      savings: 2000,
+      debt: 500,
+      netWorth: 245000
+    };
+
+    // Load from local storage
+    const savedData = localStorage.getItem(STORAGE_KEY);
+    if (savedData) {
+      try {
+        state = { ...state, ...JSON.parse(savedData) };
+      } catch (e) {
+        console.error("Error parsing saved data.");
+      }
+    }
+
+    // Initialize DOM
+    window.addEventListener('DOMContentLoaded', () => {
+      // Set Date
+      const dateOpts = { month: 'short', year: 'numeric' };
+      document.getElementById('currentDate').innerText = new Date().toLocaleDateString('en-US', dateOpts).toUpperCase();
+      
+      // Populate fields
+      Object.keys(state).forEach(key => {
+        const el = document.getElementById(key);
+        if (el) {
+          el.value = formatCurrency(state[key]);
+        }
+      });
+      calculateRemaining();
+    });
+
+    // --- Audio System (Typewriter Click) ---
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      const btn = document.getElementById('soundToggle');
+      btn.innerText = soundEnabled ? 'Sound: On' : 'Sound: Off';
+      btn.classList.toggle('text-muted');
+    }
+
+    function playTypewriterClick() {
+      if (!soundEnabled) return;
+      initAudio();
+      
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      
+      // Filter for a mechanical 'thwack' sound
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'highpass';
+      filter.frequency.value = 1000;
+
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.03);
+      
+      gain.gain.setValueAtTime(0, audioCtx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.15, audioCtx.currentTime + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(audioCtx.destination);
+      
+      osc.start(audioCtx.currentTime);
+      osc.stop(audioCtx.currentTime + 0.06);
+    }
+
+    // --- Input Handling & Formatting ---
+    function formatCurrency(num) {
+      return Number(num).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function parseCurrency(str) {
+      return parseFloat(str.replace(/,/g, '')) || 0;
+    }
+
+    function handleFocus(el) {
+      // Remove commas for easier editing
+      el.value = state[el.id]; 
+      // Move cursor to end
+      setTimeout(() => { el.setSelectionRange(el.value.length, el.value.length); }, 10);
+    }
+
+    function handleInput() {
+      playTypewriterClick();
+    }
+
+    function handleBlur(el, key) {
+      const rawValue = parseCurrency(el.value);
+      state[key] = Math.max(0, rawValue); // Prevent negative inputs for cleaner aesthetics
+      
+      el.value = formatCurrency(state[key]);
+      saveData();
+      calculateRemaining();
+    }
+
+    // --- Core Logic ---
+    function calculateRemaining() {
+      const remaining = state.income - (state.essentials + state.flexible + state.savings + state.debt);
+      
+      const remainingEl = document.getElementById('remainingBalance');
+      const statusEl = document.getElementById('remainingStatus');
+      
+      remainingEl.innerText = formatCurrency(Math.abs(remaining));
+      
+      if (remaining === 0) {
+        remainingEl.className = "font-serif text-5xl sm:text-6xl tracking-tight text-cream";
+        statusEl.innerText = "Perfectly balanced.";
+      } else if (remaining > 0) {
+        remainingEl.className = "font-serif text-5xl sm:text-6xl tracking-tight text-cream";
+        statusEl.innerText = "Surplus capital available for allocation.";
+      } else {
+        remainingEl.className = "font-serif text-5xl sm:text-6xl tracking-tight text-red-300"; // Elegant subtle warning
+        statusEl.innerText = "Deficit detected. Adjust your edit.";
+        remainingEl.innerText = "-" + remainingEl.innerText;
+      }
+    }
+
+    function saveData() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+  </script>
+</body>
+</html>
